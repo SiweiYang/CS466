@@ -1,0 +1,46 @@
+\documentclass[12pt]{article}
+
+\begin{document}
+
+\begin{center}
+\large\bf University of Waterloo\\
+CS~466 --- Advanced Algorithm\\
+Spring 2013\\
+Problem Set 1\\
+Siwei Yang - 20258568\\
+\end{center}
+\bigskip
+
+\title{Problem Set 1}
+\date{\today}
+\author{Siwei Yang - 20258568}
+
+\begin{enumerate}
+
+\item{} [7 marks: Greed and Approximation]
+As part of the process of dropping the penny as a unit of coinage, the Treasury Board observed that there would be room for a new coin in cash registers. As a consequence they have decided to introduce a new 20 cent coin (so we will have 5, 10, 20, 25, 100 and 200 cent coins, and all charges will be rounded to the nearest multiple of 5 cents). The staff of the Math Faculty C\&D use a greedy algorithm for making change. They repeatedly give the largest coin that will not exceed the total. In the past this has enabled them to make change using as few coins as possible.
+
+\begin{itemize}
+
+\item[a.] Show that this method will no longer always give the fewest coins possible.
+
+\item[b.] Show, however, that the number of coins using this heuristic will be within one of the minimum possible for any amount required. (We will not deal with other “suboptimal” heuristics as close to optimal as this.)
+
+\end{itemize}
+
+\medskip
+
+\item{} [8 marks: Avoiding Amortization]
+We briefly discussed the problem of counting the number of times certain events occur and maintaining them in a list by decreasing order of frequency. Assume we have n items and can reference any one of their records in constant time. Design a data structure that permits you to:
+\begin{itemize}
+
+\item[-] Increment or determine the count of any element in constant time, and
+
+\item[-] Access the elements in increasing or decreasing order by count, also in constant time for each element inspected.
+
+\end{itemize}
+
+\end{enumerate}
+
+\end{document}
+
