@@ -1,4 +1,5 @@
 \documentclass[12pt]{article}
+\usepackage{amsmath}
 
 \begin{document}
 
@@ -24,7 +25,38 @@ As part of the process of dropping the penny as a unit of coinage, the Treasury 
 
 \item[a.] Show that this method will no longer always give the fewest coins possible.
 
+Assume the cashier needs to give back a customer 40 cents in change. By using the greedy algorithm, the cashier gives the customer coins of 5, 10, 25. However, the optimal way to give back change is to use 20, 20.
+
 \item[b.] Show, however, that the number of coins using this heuristic will be within one of the minimum possible for any amount required. (We will not deal with other “suboptimal” heuristics as close to optimal as this.)
+
+Assume the cashier needs to give back a customer n * 5 cents in change.
+Let
+$c_{0} * 5, c_{1} * 10, c_{2} * 20, c_{3} * 25, c_{4} * 100, c_{5} * 200$
+be one of the optimal ways to give back change while minimizing number of the 20 coins.
+Consider $c_{0}$, since two 5 coins can be replaced by a 10 coin to reduce number of coins used, we always have
+\begin{equation}
+c_{0} < 2
+\end{equation}
+
+For the same reason, we also have
+\begin{equation}
+c_{1} < 2, c_{2} < 5, c_{3} < 4, c_{4} < 2
+\end{equation}
+
+Note we picked a combination that minimize $c_{2}$, and three 20 coins can be replaced with two 25 coins and a 10 coin while maintaining the number of coins used, we always have
+\begin{equation}
+c_{2} < 3
+\end{equation}
+
+Let
+$c_{0}^{'} * 5, c_{1}^{'} * 10, c_{2}^{'} * 20, c_{3}^{'} * 25, c_{4}^{'} * 100, c_{5}^{'} * 200$
+be way to give back change using greedy algorithm.
+
+Following the algorithm, we have
+\begin{equation}
+c_{0}^{'} < 2, c_{1}^{'} < 2, c_{2}^{'} < 2, c_{3}^{'} < 4, c_{4}^{'} < 2
+\end{equation}
+
 
 \end{itemize}
 
