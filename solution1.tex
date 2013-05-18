@@ -103,7 +103,17 @@ We briefly discussed the problem of counting the number of times certain events 
 
 \end{itemize}
 
+The data structure needs a two layer linked list system that handles reference to elements and count of elements separately. At the top level, we have a double linked list of bucket nodes that have a number representing the access count for elements inside it and two auxilary links to the head and tail of a linked list of elements. And the bucket list is sorted by increasing access count. Nodes inside the linked list of elements have one auxilary link to the parent bucket.
 
+Given this data structure, if we access to an element node, we can
+
+determine the count for that element by accessing the parent bucket and read the number of count from it.
+
+increment the count for that element by removing the element from the element list. inspect the next bucket, and create a empty bucket to insert after the current bucket if the next bucket has a count not consecutive with the current bucket. insert the element into the bucket after the current bucket. remove the current bucket if it becomes empty.
+
+access element by increasing order by count by in order traversing the the bucket list from head to tail.
+
+access element by decreasing order by count by in order traversing the the bucket list from tail to head.
 
 \end{enumerate}
 
