@@ -48,6 +48,8 @@ Note we picked a combination that minimize $c_{2}$, and three 20 coins can be re
 c_{2} < 3
 \end{equation}
 
+Consider $c$, we have $c_{2} \in \{0, 1, 2\}$. If $c_{2} = 0$, we can create another combination $c^{''}$ where $c_{i}^{''} = c_{i}$. $c^{''}$ is a combination without 20 coin that is optimal. If $c_{2} = 1$, then $c$ is a combination with one 20 coin. We can create another combination $c^{''}$ where $c_{i}^{''} = c_{i}^{'}$, except $c_{1}^{''} = c_{1}^{'} + 2, c_{2}^{''} = 0$. $c^{''}$ is a combination without 20 coin that is one worse than optimal. If $c_{2} = 2$, then $c$ is a combination with two 20 coin. We can create another combination $c^{''}$ where $c_{i}^{''} = c_{i}^{'}$, except $c_{0}^{''} = c_{0}^{'} + 1, c_{1}^{''} = c_{1}^{'} + 1, c_{2}^{''} = 0, c_{3}^{''} = c_{3}^{'} + 1$. $c^{''}$ is a combination without 20 coin that is one worse than optimal. \textbf{there always exists $c^{''}$ without 20 coin that is at most one worse than optimal.}
+
 Let
 $c_{0}^{'} * 5, c_{1}^{'} * 10, c_{2}^{'} * 20, c_{3}^{'} * 25, c_{4}^{'} * 100, c_{5}^{'} * 200$
 be way to give back change using greedy algorithm.
@@ -57,6 +59,35 @@ Following the algorithm, we have
 c_{0}^{'} < 2, c_{1}^{'} < 2, c_{2}^{'} < 2, c_{3}^{'} < 4, c_{4}^{'} < 2
 \end{equation}
 
+Given that $c_{2}^{'} \in \{0, 1\}$, if
+\begin{equation}
+c_{2}^{'} = 0
+\end{equation}
+then $c^{'}$ is a combination without 20 coin
+
+Compare $c, c^{''}$, both use 5, 10, 25, 100 and 200 cent coins to represent the same total change. Since $c$ is optimal when 20 coin is not used, $c$ is at least as good as $c^{''}$. Also $c^{''}$ is at most one worse than optimal. \textbf{Thus $c$ is at most one worse than optimal}.
+
+If
+\begin{equation}
+c_{2}^{'} = 1
+\end{equation}
+
+Then, by the property of greedy algorithm
+\begin{equation}
+c_{0}^{'} = 0, c_{1}^{'} = 0
+\end{equation}
+
+Given that, we have
+\begin{equation}
+n * 5 \equiv 20 \mod{25}
+\end{equation}
+
+Thus, create $c^{'''}$ by using greedy algorithm with 5, 10, 25, 100 and 200 cent coins. And, we know $c^{'''}$ is optimal when 20 coin is not used, $c^{'''}$ is at least as good as $c^{''}$. Also $c^{''}$ is at most one worse than optimal. \textbf{Thus, $c^{'''}$ is at most one worse than optimal}. Not only that, we have
+\begin{equation}
+c_{0}^{'''} = 0, c_{1}^{'''} = 2, c_{2}^{'''} = 0
+\end{equation}
+
+Therefore, $c^{'''}$ is one worse than $c$. \textbf{Thus, $c$ is optimal}.
 
 \end{itemize}
 
@@ -71,6 +102,8 @@ We briefly discussed the problem of counting the number of times certain events 
 \item[-] Access the elements in increasing or decreasing order by count, also in constant time for each element inspected.
 
 \end{itemize}
+
+
 
 \end{enumerate}
 
