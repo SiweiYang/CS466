@@ -29,52 +29,56 @@ Assume the cashier needs to give back a customer 40 cents in change. By using th
 
 \item[b.] Show, however, that the number of coins using this heuristic will be within one of the minimum possible for any amount required. (We will not deal with other “suboptimal” heuristics as close to optimal as this.)
 
+For the sake of simplicity, we use vectors $\chi, \chi^{'}, \chi^{''}, \chi^{'''}, ...$ to represent combinations of coins. For a given vector $\chi$, we have $\chi_{0}, \chi_{1}, \chi_{2}, \chi_{3}, \chi_{4}, \chi_{5}$ denoting the number of 5, 10, 20, 25, 100, 200 coins used.
+
+The greedy algorithm creates optimal solution when only 5, 10, 25, 100, 200 coins can be used. This has been proved in CS341, and will be taken for granted.
+
 Assume the cashier needs to give back a customer n * 5 cents in change.
 Let
-$c_{0} * 5, c_{1} * 10, c_{2} * 20, c_{3} * 25, c_{4} * 100, c_{5} * 200$
+$\chi_{0} * 5, \chi_{1} * 10, \chi_{2} * 20, \chi_{3} * 25, \chi_{4} * 100, \chi_{5} * 200$
 be one of the optimal ways to give back change while minimizing number of the 20 coins.
-Consider $c_{0}$, since two 5 coins can be replaced by a 10 coin to reduce number of coins used, we always have
+Consider $\chi_{0}$, since two 5 coins can be replaced by a 10 coin to reduce number of coins used, we always have
 \begin{equation}
-c_{0} < 2
+\chi_{0} < 2
 \end{equation}
 
 For the same reason, we also have
 \begin{equation}
-c_{1} < 2, c_{2} < 5, c_{3} < 4, c_{4} < 2
+\chi_{1} < 2, \chi_{2} < 5, \chi_{3} < 4, \chi_{4} < 2
 \end{equation}
 
-Note we picked a combination that minimize $c_{2}$, and three 20 coins can be replaced with two 25 coins and a 10 coin while maintaining the number of coins used, we always have
+Note we picked a combination that minimize $\chi_{2}$, and three 20 coins can be replaced with two 25 coins and a 10 coin while maintaining the number of coins used, we always have
 \begin{equation}
-c_{2} < 3
+\chi_{2} < 3
 \end{equation}
 
-Consider $c$, we have $c_{2} \in \{0, 1, 2\}$. If $c_{2} = 0$, we can create another combination $c^{''}$ where $c_{i}^{''} = c_{i}$. $c^{''}$ is a combination without 20 coin that is optimal. If $c_{2} = 1$, then $c$ is a combination with one 20 coin. We can create another combination $c^{''}$ where $c_{i}^{''} = c_{i}^{'}$, except $c_{1}^{''} = c_{1}^{'} + 2, c_{2}^{''} = 0$. $c^{''}$ is a combination without 20 coin that is one worse than optimal. If $c_{2} = 2$, then $c$ is a combination with two 20 coin. We can create another combination $c^{''}$ where $c_{i}^{''} = c_{i}^{'}$, except $c_{0}^{''} = c_{0}^{'} + 1, c_{1}^{''} = c_{1}^{'} + 1, c_{2}^{''} = 0, c_{3}^{''} = c_{3}^{'} + 1$. $c^{''}$ is a combination without 20 coin that is one worse than optimal. \textbf{there always exists $c^{''}$ without 20 coin that is at most one worse than optimal.}
+Consider $c$, we have $\chi_{2} \in \{0, 1, 2\}$. If $\chi_{2} = 0$, we can create another combination $\chi^{''}$ where $\chi_{i}^{''} = \chi_{i}$. $\chi^{''}$ is a combination without 20 coin that is optimal. If $\chi_{2} = 1$, then $\chi$ is a combination with one 20 coin. We can create another combination $\chi^{''}$ where $\chi_{i}^{''} = \chi_{i}^{'}$, except $\chi_{1}^{''} = \chi_{1}^{'} + 2, \chi_{2}^{''} = 0$. $\chi^{''}$ is a combination without 20 coin that is one worse than optimal. If $\chi_{2} = 2$, then $\chi$ is a combination with two 20 coin. We can create another combination $\chi^{''}$ where $\chi_{i}^{''} = \chi_{i}^{'}$, except $\chi_{0}^{''} = \chi_{0}^{'} + 1, \chi_{1}^{''} = \chi_{1}^{'} + 1, \chi_{2}^{''} = 0, \chi_{3}^{''} = \chi_{3}^{'} + 1$. $\chi^{''}$ is a combination without 20 coin that is one worse than optimal. \textbf{there always exists $\chi^{''}$ without 20 coin that is at most one worse than optimal.}
 
 Let
-$c_{0}^{'} * 5, c_{1}^{'} * 10, c_{2}^{'} * 20, c_{3}^{'} * 25, c_{4}^{'} * 100, c_{5}^{'} * 200$
+$\chi_{0}^{'} * 5, \chi_{1}^{'} * 10, \chi_{2}^{'} * 20, \chi_{3}^{'} * 25, \chi_{4}^{'} * 100, \chi_{5}^{'} * 200$
 be way to give back change using greedy algorithm.
 
 Following the algorithm, we have
 \begin{equation}
-c_{0}^{'} < 2, c_{1}^{'} < 2, c_{2}^{'} < 2, c_{3}^{'} < 4, c_{4}^{'} < 2
+\chi_{0}^{'} < 2, \chi_{1}^{'} < 2, \chi_{2}^{'} < 2, \chi_{3}^{'} < 4, \chi_{4}^{'} < 2
 \end{equation}
 
-Given that $c_{2}^{'} \in \{0, 1\}$, if
+Given that $\chi_{2}^{'} \in \{0, 1\}$, if
 \begin{equation}
-c_{2}^{'} = 0
+\chi_{2}^{'} = 0
 \end{equation}
-then $c^{'}$ is a combination without 20 coin
+then $\chi^{'}$ is a combination without 20 coin
 
-Compare $c, c^{''}$, both use 5, 10, 25, 100 and 200 cent coins to represent the same total change. Since $c$ is optimal when 20 coin is not used, $c$ is at least as good as $c^{''}$. Also $c^{''}$ is at most one worse than optimal. \textbf{Thus $c$ is at most one worse than optimal}.
+Compare $\chi, \chi^{''}$, both use 5, 10, 25, 100 and 200 cent coins to represent the same total change. Since $\chi$ is optimal when 20 coin is not used, $\chi$ is at least as good as $\chi^{''}$. Also $\chi^{''}$ is at most one worse than optimal. \textbf{Thus $\chi$ is at most one worse than optimal}.
 
 If
 \begin{equation}
-c_{2}^{'} = 1
+\chi_{2}^{'} = 1
 \end{equation}
 
 Then, by the property of greedy algorithm
 \begin{equation}
-c_{0}^{'} = 0, c_{1}^{'} = 0
+\chi_{0}^{'} = 0, \chi_{1}^{'} = 0
 \end{equation}
 
 Given that, we have
@@ -82,12 +86,12 @@ Given that, we have
 n * 5 \equiv 20 \mod{25}
 \end{equation}
 
-Thus, create $c^{'''}$ by using greedy algorithm with 5, 10, 25, 100 and 200 cent coins. And, we know $c^{'''}$ is optimal when 20 coin is not used, $c^{'''}$ is at least as good as $c^{''}$. Also $c^{''}$ is at most one worse than optimal. \textbf{Thus, $c^{'''}$ is at most one worse than optimal}. Not only that, we have
+Thus, create $\chi^{'''}$ by using greedy algorithm with 5, 10, 25, 100 and 200 cent coins. And, we know $\chi^{'''}$ is optimal when 20 coin is not used, $\chi^{'''}$ is at least as good as $\chi^{''}$. Also $\chi^{''}$ is at most one worse than optimal. \textbf{Thus, $\chi^{'''}$ is at most one worse than optimal}. Not only that, we have
 \begin{equation}
-c_{0}^{'''} = 0, c_{1}^{'''} = 2, c_{2}^{'''} = 0
+\chi_{0}^{'''} = 0, \chi_{1}^{'''} = 2, \chi_{2}^{'''} = 0
 \end{equation}
 
-Therefore, $c^{'''}$ is one worse than $c$. \textbf{Thus, $c$ is optimal}.
+Therefore, $\chi^{'''}$ is one worse than $c$. \textbf{Thus, $\chi$ is optimal}.
 
 \end{itemize}
 
