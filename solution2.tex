@@ -1,0 +1,82 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+\begin{center}
+\large\bf University of Waterloo\\
+CS~466 --- Advanced Algorithm\\
+Spring 2013\\
+Problem Set 2\\
+Siwei Yang - 20258568\\
+\end{center}
+\bigskip
+
+\title{Problem Set 2}
+\date{\today}
+\author{Siwei Yang - 20258568}
+
+\begin{enumerate}
+
+\item{} [8 marks: The Need for Paid Exchanges]
+In discussing Move to Front and other self-organizing heuristics the model was very important. In the model in which swapping the requested element with one immediately in front of it (and perhaps repeating this many times) as a “free exchange”, bring the question as to whether “paid exchanges” are necessary to achieve the offline optimal. “Clearly” they are not necessary to come within a factor of two of optimal under this model.
+
+\begin{itemize}
+
+\item[a.] Show that the offline optimal to service the request $a_{3},a_{2},a_{3},a_{2}$ is 8. The list is initially in the order $a_{1},a_{2},a_{3}$.
+
+Assume we know the procedures to achieve offline optimal. Then, let $\delta_{0}, \delta_{1}, \delta_{2}, \delta_{3}$ represent the ordering before the before first, second, third and fourth accesses; let $c_{0}, c_{1}, c_{2}, c_{3}$ represent the cost for first, second, third and fourth accesses.
+
+We know that $c_{0}, c_{1}, c_{2}, c_{3} \geq 1$. Assuming $c_{0} = 1$, then the access cost for $a_{2}$ in $\delta_{0}$ is greater than 1. Since $c_{1}$ is at least access cost for $a_{2}$ in $\delta_{0}$, we have $c_{1} \geq 2$. Thus,
+\begin{equation} \label{eq:min-cost-1-2}
+c_{0} + c_{1} \geq 3
+\end{equation}
+
+Otherwise  $c_{0}  \geq 2$, and $c_{1} \geq 1$, we still have equation~\ref{eq:min-cost-1-2}.
+
+And for the same reason, we have
+\begin{equation} \label{eq:min-cost-3-4}
+c_{2} + c_{3} \geq 3
+\end{equation}
+
+Now, looking at the initial ordering $a_{1},a_{2},a_{3}$, if $\delta_{0}$ is $a_{1},a_{2},a_{3}$, then we have$c_{0} = 3$ and  $c_{1} \geq 2$. Thus, we have
+\begin{equation} \label{eq:real-cost-initial}
+c_{0} + c_{1} \geq 5
+\end{equation}
+which leads to
+\begin{equation}
+c_{0} + c_{1} + c_{2} + c_{3} \geq 8
+\end{equation}
+Thus, the \textbf{total cost is at least 8}.
+
+Otherwise, $\delta_{0}$ is derivied from $a_{1},a_{2},a_{3}$ after exchanges. However, each paid exchange reduce access cost by one to at most one element. Therefore, we easily have
+\begin{equation} \label{eq:real-cost-pay}
+c_{0} + c_{1} \geq 4
+\end{equation}
+which leads to
+\begin{equation}
+1 + c_{0} + c_{1} + c_{2} + c_{3} \geq 8
+\end{equation}
+Thus, the \textbf{total cost is at least 8}.
+
+if  $\delta_{0}$ is derivied from $a_{1},a_{2},a_{3}$ after one paid exchange. And, the \textbf{total cost is at least 8}. if  $\delta_{0}$ is derivied from $a_{1},a_{2},a_{3}$ after $k$ paid exchanges where $k \geq 2$, we still have
+\begin{equation}
+k + c_{0} + c_{1} + c_{2} + c_{3} \geq 8
+\end{equation}
+Thus, the \textbf{total cost is at least 8}.
+
+From above, we conclude the optimal \textbf{total cost is at least 8}. And we actually achieve the total cost of 8 if we have $\delta_{0} = a_{2},a_{3},a_{1}$ is derivied from $a_{1},a_{2},a_{3}$ after two paid exchanges as well as $\delta_{0} = \delta_{1} = \delta_{2} = \delta_{3}$. Therefore, the optimal \textbf{total cost is 8}.
+
+\item[b.] Also show that the optimal offline algorithm without using these “paid exchanges” is 9.
+
+\end{itemize}
+
+\medskip
+
+\item{} [6 marks]
+In a splay tree we use “double rotations” to move an element to the root. It was mentioned that moving the requested element to the root by a sequence can give very bad amortized behavior. Prove that this amortized cost can be $\Theta(n)$ (actually you can get it to n)for an arbitrarily long sequence of requests on a tree with n nodes, with a starting configuration of your choice. (You need not deal with either insertions or deletions.)
+
+\end{enumerate}
+
+\end{document}
+
