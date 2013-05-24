@@ -39,8 +39,8 @@ And for the same reason, we have
 c_{2} + c_{3} \geq 3
 \end{equation}
 
-Now, looking at the initial ordering $a_{1},a_{2},a_{3}$, if $\delta_{0}$ is $a_{1},a_{2},a_{3}$, then we have$c_{0} = 3$ and  $c_{1} \geq 2$. Thus, we have
-\begin{equation} \label{eq:real-cost-initial}
+Now, looking at the initial ordering $\delta_{0} = a_{1},a_{2},a_{3}$, we have$c_{0} = 3$. if no paid exchange is made during first access, $c_{1} \geq 2$. Thus, we have
+\begin{equation} \label{eq:real-cost-no-exchange}
 c_{0} + c_{1} \geq 5
 \end{equation}
 which leads to
@@ -49,25 +49,39 @@ c_{0} + c_{1} + c_{2} + c_{3} \geq 8
 \end{equation}
 Thus, the \textbf{total cost is at least 8}.
 
-Otherwise, $\delta_{0}$ is derivied from $a_{1},a_{2},a_{3}$ after exchanges. However, each paid exchange reduce access cost by one to at most one element. Therefore, we easily have
+If paid exchange costing $k$ is made during first access, Then we have $c_{1} \geq 1$. Therefore, we easily have
 \begin{equation} \label{eq:real-cost-pay}
-c_{0} + c_{1} \geq 4
+k + c_{0} + c_{1} \geq 5
 \end{equation}
 which leads to
-\begin{equation}
-1 + c_{0} + c_{1} + c_{2} + c_{3} \geq 8
-\end{equation}
-Thus, the \textbf{total cost is at least 8}.
-
-if  $\delta_{0}$ is derivied from $a_{1},a_{2},a_{3}$ after one paid exchange. And, the \textbf{total cost is at least 8}. if  $\delta_{0}$ is derivied from $a_{1},a_{2},a_{3}$ after $k$ paid exchanges where $k \geq 2$, we still have
 \begin{equation}
 k + c_{0} + c_{1} + c_{2} + c_{3} \geq 8
 \end{equation}
 Thus, the \textbf{total cost is at least 8}.
 
-From above, we conclude the optimal \textbf{total cost is at least 8}. And we actually achieve the total cost of 8 if we have $\delta_{0} = a_{2},a_{3},a_{1}$ is derivied from $a_{1},a_{2},a_{3}$ after two paid exchanges as well as $\delta_{0} = \delta_{1} = \delta_{2} = \delta_{3}$. Therefore, the optimal \textbf{total cost is 8}.
+From above, we conclude the optimal \textbf{total cost is at least 8}. And we actually achieve the total cost of 8 if we have $\delta_{1} = a_{2},a_{3},a_{1}$ is derivied from $a_{1},a_{2},a_{3}$ after one paid and one free exchanges as well as $\delta_{1} = \delta_{2} = \delta_{3}$. Therefore, the optimal \textbf{total cost is 8}.
 
 \item[b.] Also show that the optimal offline algorithm without using these “paid exchanges” is 9.
+
+Consider $\delta_{1}$, if $a_{3}$ move forward with free exchange, then $\delta_{1}$ has $a_{2}$ at it's end which means $c_{1} = 3$. Thus
+\begin{equation} \label{eq:real-cost-move}
+c_{0} + c_{1} = 6
+\end{equation}
+Combining with equation~\ref{eq:min-cost-3-4}, we have
+\begin{equation}
+c_{0} + c_{1} + c_{2} + c_{3} \geq 9
+\end{equation}
+
+Otherwise, $\delta_{1}$ has $a_{3}$ at it's end which means $c_{3} = 3$. Thus
+\begin{equation} \label{eq:real-cost-3-4}
+c_{2} + c_{3} \geq 4
+\end{equation}
+Combining with equation~\ref{eq:real-cost-no-exchange}, we have
+\begin{equation}
+c_{0} + c_{1} + c_{2} + c_{3} \geq 9
+\end{equation}
+
+From above, we conclude the optimal \textbf{total cost is at least 9}.  And we actually achieve the total cost of 9 if we have $\delta_{1} = a_{1},a_{2},a_{3}$ is derivied from $\delta_{0}$ with no exchanges;  $\delta_{2} = a_{2},a_{1},a_{3}$ is derivied from $\delta_{1}$ with one free exchanges as well as $\delta_{2} = \delta_{3}$. Therefore, the optimal \textbf{total cost is 9}.
 
 \end{itemize}
 
