@@ -90,6 +90,13 @@ From above, we conclude the optimal \textbf{total cost is at least 9}.  And we a
 \item{} [6 marks]
 In a splay tree we use “double rotations” to move an element to the root. It was mentioned that moving the requested element to the root by a sequence can give very bad amortized behavior. Prove that this amortized cost can be $\Theta(n)$ (actually you can get it to n)for an arbitrarily long sequence of requests on a tree with n nodes, with a starting configuration of your choice. (You need not deal with either insertions or deletions.)
 
+The adversary sequence is a repeatition of the list of sorted elements. The initial configuration doesn't matter as the first batch of accesses to all nodes in the tree will reshape the tree into a linear tree(each node has only left or right child except the leaf). Counting access cost after that, each batch of accesses to all nodes will have an aggregated cost of(considering each comparison and link travesal, or rotation cost 1)
+\begin{equation}
+(n + n + n - 1 + ... + 2) * 2
+\end{equation}
+
+and the tree end up retuning to a linear tree. That sums up to $n^{2} + 3n - 2$. Amortized cost for each access is $\frac{n^{2} + 3n - 2}{n}$ within this batch. As the adversary sequence goes arbitrarily long, the amortized cost of the whole sequence converge to $\frac{n^{2} + 3n - 2}{n}$ which is in $\Theta(n)$.
+
 \end{enumerate}
 
 \end{document}
