@@ -1,6 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath}
 \usepackage{mathtools}
+\usepackage{tikz}
 
 \begin{document}
 
@@ -88,11 +89,33 @@ This question also deals with the “approximately optimal” binary search tree
 Consider ther following probability distribution:
 \begin{center}
 \begin{tabular}{l*{8}{c}r}
-Interval          & q0 & p1 & q1 & p2 & q2 & p3 & q3                                         \\
+Interval          & q0 & p1 & q1 & p2 & q2 & p3 & q3                     \\
 \hline
-Probability     & 165 & 77 & 3025 & 82.5 & $70 + \sqrt{55}$ & 88 & 77               \\
+Probability       & 0 & 0.49 & 0 & 0.02 & 0 & 0.49 & 0                   \\
 \end{tabular}
 \end{center}
+
+following the heuristic we have a tree like this:
+\begin{tikzpicture}
+\node[circle,draw](z){node 2}
+  child{
+node[circle,draw]{node 1} child[missing] child[missing]
+  }
+  child{
+node[circle,draw]{node 3} child[missing] child[missing]
+  };
+\end{tikzpicture}
+the amortized cost for accessing this tree is $2 * 0.49 + 0.02 + 2 * 0.49 = 1.98$.
+
+However, the optimal search tree have the following form:
+\begin{tikzpicture}
+\node[circle,draw](z){node 1}
+  child[missing]
+  child{
+node[circle,draw]{node 3} child{node[circle,draw] {node 2}} child[missing]
+  };
+\end{tikzpicture}
+the amortized cost for accessing this tree is $0.49 + 3 * 0.02 + 2 * 0.49 = 1.53$.
 
 
 \end{enumerate}
