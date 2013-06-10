@@ -122,6 +122,24 @@ And we know any node can become x's descendents at most once, and their depth wo
 \item{} [6 marks: Close to 2-SAT]
 Suppose you have a Boolean formula in CNF (conjunctive normal form) with n variables and also n clauses. However $\lg{n}$ clauses have three literals (variables or their negations) and the remaining ones have just two. Sketch an efficient algorithm to determine whether the formula is satisfiable.
 
+The algorithm to solve the formula is to divide the problem into 3-SAT and 2-SAT problems. Then solve the 2 problems individually.
+
+Let the original problem be F. The sub-problem only has 3 literals clauses is $F_{3-SAT}$. The sub-problem only has 2 literals clauses is $F_{2-SAT}$.
+\begin{equation}
+F = F_{3-SAT} \land F_{2-SAT}
+\end{equation}
+
+First tackle $F_{3-SAT}$ by enumerating all possible variable assignments of the variables in the formula. Consider the number of variables need to be covered:
+\begin{equation}
+| v(F_{3-SAT}) | \leq 3 * \lg{n}
+\end{equation}
+
+Thus, the size of the enumeration:
+\begin{equation}
+2^{| v(F_{3-SAT}) |} \leq n^{3}
+\end{equation}
+
+For each enumeration, it's a linear time operation to check if the assignment is valid. In case of a valid assignment, substitute the assignment into $F_{2-SAT}$ to arrive at $F_{2-SAT}'$. Use the linear algorithm taught in class to determine if $F_{2-SAT}'$ is satisfable. If $F_{2-SAT}'$ is satisfable, then $F$ is satisfable. Otherwise, move on to the next assignment for $F_{3-SAT}$. Unless at least one assignment creates a satisfable $F_{2-SAT}'$, the original problem $F$ is not satisfable. \textbf{The algorithm is a composite of three linear time operation, thus the algorithm is still linear time}.
 
 
 \end{enumerate}
