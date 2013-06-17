@@ -32,7 +32,7 @@ Preprocess the graph to build a tree structure by creating nodes and go over the
 Scan all nodes to find a list of leaf nodes. Create an empty list for covering vertices.
 
 \item[Third]
-Delete an arbitrary leaf node, a, and its parent, b. Save b into the covering vertices list. Check b's parent, c, for siblings. If no other sibling exists, add c into the leaf node list as it is a leaf node in the updated tree.
+Arbitrarily pick a node with parent, let the node be a and its parent be b. Delete a and b from the tree. Save b into the covering vertices list. Check b's parent, c, for siblings. If no other sibling exists, add c into the leaf node list as it is a leaf node in the updated tree.
 
 \item[Forth]
 Repeat the third step until exhausted the leaf node list or all nodes in the list have no parents(depending on the node processing order, the tree might be broken into multiple components). Now we have minimum vertex cover saved in the other list.
@@ -52,7 +52,7 @@ Note: Using mathematical induction on the length of cycles.
 
 \textbf{Let the base case be}: If a tournament has a directed cycle of length 3, then it has a directed cycle of length 3. This is trivially proven by logic.
 
-\textbf{Let the induction be}: Assume a tournament has a directed cycle, C, of length k + 1, then it has at least three connectted vertices, a, b, c. Without loss of generality, assume $a \to b$ and $b \to c$. Then, given there is an edge between a and c,
+\textbf{Let the induction be}: Assume if a tournament has a directed cycle of length k, then it has a directed cycle of length 3. Then, let a tournament has a directed cycle, C, of length k + 1, then it has at least three connectted vertices, a, b, c. Without loss of generality, assume $a \to b$ and $b \to c$. Then, given there is an edge between a and c,
 \begin{itemize}
 \item{}[if $a \gets c$]
 a, b, c form a directed cycle of length 3
@@ -60,8 +60,9 @@ a, b, c form a directed cycle of length 3
 \item{}[if $a \to c$]
 a, c and rest of vertices of C form a directed cycle of length k
 \end{itemize}
+Either way, the tournament has a directed cycle of length 3. Therefore, \textbf{if a tournament has a directed cycle of length k, then it has a directed cycle of length 3}.
 
-\textbf{Special case}: If a tournament has a directed cycle of length 2, then it's not a tournament any more. Because the cycle adds two edges between two vertices which contradicts with the tournament definition.
+\textbf{Note}: If a tournament has a directed cycle of length 2, then it's not a tournament any more. Because the cycle adds two edges between two vertices which contradicts with the tournament definition.
 
 Thus, \textbf{a tournament has a directed cycle only if it has a directed cycle of length 3}. And, \textbf{a tournament has a directed cycle if it has a directed cycle of length 3}, which is trivially proven by logic.
 
