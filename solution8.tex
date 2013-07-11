@@ -1,0 +1,48 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{tikz}
+
+\begin{document}
+
+\begin{center}
+\large\bf University of Waterloo\\
+CS~466 --- Advanced Algorithm\\
+Spring 2013\\
+Problem Set 8\\
+Siwei Yang - 20258568\\
+\end{center}
+\bigskip
+
+\begin{enumerate}
+
+\item{} [10 marks: ]
+Given a set P of n points in the plane, a minimum Steiner tree is a tree that connects the points of P and has minimum total Euclidean (i.e. $L_{2}$) length. For example, for 3 points $p_{1}$, $p_{2}$, $p_{3}$ forming an acute triangle, the minimum Steiner tree has leaves $p_{1}$, $p_{2}$, $p_{3}$ plus a node of degree 3 in the middle of the triangle at the Fermat point where the 3 edges form angles of 120$^\circ$(Look at Wikipedia for examples).
+
+Prove that there is a polynomial time 2-approximation algorithm for the minimum Steiner tree problem in the plane. In particular, show that the minimum spanning tree of the points(using Euclidean distances as edge weights in the complete graph) is a 2-approximation.
+
+
+
+\item{} [10 marks]
+Given a directed graph, G, represented by its adjacency matrix. (Let’s assume there are no loops … i.e. no edges (i,i).)
+\begin{itemize}
+\item{}[6 marks]Give an efficient algorithm to determine what pairs of nodes have directed paths of length exactly $n-1$. Give the runtime of your method and justify this runtime.
+
+Let M be the adjacency matrix.
+\begin{itemize}
+\item Calculate series $M^{2^{i}}$ up to $i = \mathcal{d} \ln{(n-1)} \mathcal{e}$. By using Dynamic Programming, we only need to spend time calculate $M^{2^{\mathcal{d} \ln{(n-1)} \mathcal{e}}}$ which takes roughly $O(\mathcal{d} \ln{(n-1)} \mathcal{e})$ time assuming size of M is constant.
+\item Then find $I \subset \{1, 2, \ldots, \mathcal{d} \ln{(n-1)} \mathcal{e}\}$ such that $\sum_{i \in I}{2^{i}} = n-1$.
+\item Calculate $M^{*} = \prod_{i \in I}{M^{2^{i}}}$ which takes roughly $O(\mathcal{d} \ln{(n-1)} \mathcal{e})$ time as well.
+\end{itemize}
+ Inspect the entries of $M^{*}$, whenever $M^{*}_{i,j} > 0$, there is a path of length $n-1$ from node i to node j.
+
+\item{}[4 marks]We know the Hamiltonian cycle problem is NP-Complete. The Hamiltonian path problem, of having a path go though each node exactly once, is also NP-hard. Explain this apparent anomaly, given that you have already given an efficient algorithm to find paths of length n-1.
+
+The path found using the algorithm given doesn't take into account a node can only be visit once. If the checking were to be incorporated into the algorithm, then each entries of the matrix have to keep track of all the paths associated with it. And, during the multiplication step, the paths from two entries have to be cross checked to filter out the bad paths. These extra overhead will drive up the runtime to reflect it's NP-hardness.
+\end{itemize}
+
+
+\end{enumerate}
+
+\end{document}
+
