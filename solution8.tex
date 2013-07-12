@@ -1,5 +1,6 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{tikz}
 
@@ -21,7 +22,52 @@ Given a set P of n points in the plane, a minimum Steiner tree is a tree that co
 
 Prove that there is a polynomial time 2-approximation algorithm for the minimum Steiner tree problem in the plane. In particular, show that the minimum spanning tree of the points(using Euclidean distances as edge weights in the complete graph) is a 2-approximation.
 
+Given a set P of n points, let $T^{*} = (V, E)$ be the tree of minimum total Euclidean length where $P = V \cap P$ and $P' = V \setminus P$.
 
+Clearly, P' is the set of points added to form the minimum Steiner tree $T^{*}$. Now, create a multi-graph:
+\begin{equation}
+G = (V, E \cup E') \text{ } where \text{ } E' = \{ (i, j) \mid (i, j) \in E, \{i, j\} \cap P' \neq \emptyset \}
+\end{equation}
+
+Now, define a few building blocks for transforming G:
+\begin{itemize}
+\item{} Consider an arbitrary node $v \in P'$, between v and any of its neighbours nodes, there are two edges from construction of G. And, if v is removed from G, each node belongs to a different component($T^{*}$ is a tree, and G doesn't have any edge that's not in $T{*}$), thus v has two edges to every component of $G \setminus v$ which also means v has two edges to every neighbouring component of $G \setminus P'$. Thus, we have a condition, $\phi$, holds true: \textbf{For arbitrary node $v \in P'$, between v and any of its neighbours nodes that belongs to P', there are two edges; between v and any of neighbouring component of $G \setminus P'$, there are two edges}; G is connectted.
+
+\item{if there exists node $v \in P'$ such that v is neighbouring with at least two components of $G \setminus P'$ and $\phi$ holds:}
+
+Let two of those compoents be $C_{1}$, $C_{2}$, and v is connectted to $C_{1}$ with $(v, v_{1,1})$ and $(v, v_{1,2})$, $C_{2}$ with $(v, v_{2,1})$ and $(v, v_{2,2})$.
+
+Replace $(v, v_{1,2})$ and $(v, v_{2,1})$ with $(v_{1,2}, v_{2,1})$ to produce G'. By triangle inequality, we know the weight of graph is not increasing. And, now v has two edges to the newly formed component of $G' \setminus P'$. Thus, $\phi$ holds in G'.
+
+\item{if there exists node $v \in P'$ such that v is not neighbouring with any components of $G \setminus P'$ and one node $v' \in P'$ and $\phi$ holds}
+
+Remove v to produce G'. We know the weight of graph is not increasing. And, $\phi$ holds in G'.
+
+\item{if there exists node $v \in P'$ such that v is neighbouring with only one components of $G \setminus P'$ and none of the nodes in P' and $\phi$ holds}
+
+Remove v to produce G'. We know the weight of graph is not increasing. And, $\phi$ holds in G'.
+
+\item{if there exists node $v \in P'$ such that v is neighbouring with only one components of $G \setminus P'$ and one node $v' \in P'$ and $\phi$ holds}
+
+Let the component be C, and v is connectted to $C$ with $(v, v_{1})$ and $(v, v_{2})$.
+
+Replace $(v, v_{1})$ and $(v, v')$ with $(v_{1}, v')$, replace $(v, v_{2})$ and $(v, v')$ with $(v_{2}, v')$, and remove v to produce G'. By triangle inequality, we know the weight of graph is not increasing. And, now v' has two edges to component C of $G' \setminus P'$. Thus, $\phi$ holds in G'.
+\end{itemize}
+
+So, G starts off with condition $\phi$, and by iteratively applying any of the four transformation steps until no step can be applied, we end up with a graph $G^{*}$. The following can be concluded:
+\begin{itemize}
+\item{} Obviously, for any node $v \in P'$ that remains in $G^{*}$, it is neighbouring with at most one component from $G^{*} \setminus P'$.
+\item{} This further implies it is neighbouring with at least two other nodes in P', otherwise v would have been removed.
+\item{} Therefore, if there is a node $v \in P'$ in $G^{*}$, then we can recursively do depth first search on nodes from P' until a cycle is found.
+\item{} But, \textbf{this is a contradiction as this would imply a cycle in G, thus a cycle in $T^{*}$}.
+\end{itemize}
+
+Thus, we conclude there is no node from P' that is in $G^{*}$. And also, not nodes in P is removed during iteration. Therefore, $G^{*}$ is a connectted graph spanning over all nodes of P. This implies a tree, T, that covers all P is a subgraph of $G^{*}$. Let the complete graph of P nodes be $G_{P}$, then we have:
+\begin{equation}
+2 * weight(T^{*}) \geq weight(G) \geq weight(G^{*} \ geq weight(T) \geq weight(MST(G_{P}))
+\end{equation}
+
+Thus, we prove that the minimum spanning tree of a complete graph of P nodes is a 2-approximate solution for the minimum Steiner tree.
 
 \item{} [10 marks]
 Given a directed graph, G, represented by its adjacency matrix. (Let’s assume there are no loops … i.e. no edges (i,i).)
