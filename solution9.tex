@@ -1,0 +1,47 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{tikz}
+
+\begin{document}
+
+\begin{center}
+\large\bf University of Waterloo\\
+CS~466 --- Advanced Algorithm\\
+Spring 2013\\
+Problem Set 9\\
+Siwei Yang - 20258568\\
+\end{center}
+\bigskip
+
+\begin{enumerate}
+
+\item{} [14 marks: Mergesort]
+Consider Mergesort when n is not (necessarily) a power of 2. The method works by (recursively) sorting a subarray of size $\frac{n}{2}$ and one of size $\frac{n}{2}$ and then merging them in n-1 comparisons. A segment of length 1 requires 0 comparisons.
+\begin{itemize}
+\item{(a)} [2 marks]
+Give a recurrence relation that describes the number of comparisons used, in the worst case, by this method.
+\begin{equation}
+C(n) =
+\begin{cases}
+    C(\mathcal{b} \frac{n}{2} \mathcal{c}) + C(\mathcal{d} \frac{n}{2} \mathcal{e}) + n - 1,& \text{if } n > 1\\
+    0,              & \text{otherwise}
+\end{cases}
+\end{equation}
+
+\item{(b)} [4 marks]
+Prove that n-1 comparisons are necessary (i.e. you cannot do it in fewer), in the \textit{worst case} for this merge step.
+
+\item{(c)} [4 marks]
+Prove that Mergesort, as described above, takes $n * \mathcal{d} \lg{n} \mathcal{e} - 2^{\mathcal{d} \lg{n} \mathcal{e}} + 1$ comparisons in the worst case.
+
+\item{(d)} [4 marks]
+The \textit{expected} number of comparisons for this method (over all possible permutations of the input) is a little $\theta(n)$ better. Prove it. (You do not have to deal with the exact constant in this $\theta(n)$ term.)
+
+\end{itemize}
+
+
+\end{enumerate}
+\end{document}
+
