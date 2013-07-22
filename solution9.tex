@@ -19,6 +19,8 @@ Siwei Yang - 20258568\\
 
 \item{} [14 marks: Mergesort]
 Consider Mergesort when n is not (necessarily) a power of 2. The method works by (recursively) sorting a subarray of size $\frac{n}{2}$ and one of size $\frac{n}{2}$ and then merging them in n-1 comparisons. A segment of length 1 requires 0 comparisons.
+
+\textbf{NOTE: Without loss of generality, assume sorting by asecending order}
 \begin{itemize}
 \item{(a)} [2 marks]
 Give a recurrence relation that describes the number of comparisons used, in the worst case, by this method.
@@ -31,13 +33,70 @@ C(n) =
 \end{equation}
 
 \item{(b)} [4 marks]
-Prove that n-1 comparisons are necessary (i.e. you cannot do it in fewer), in the \textit{worst case} for this merge step.
+Prove that $n - 1$ comparisons are necessary (i.e. you cannot do it in fewer), in the \textit{worst case} for this merge step.
+
+For any merge step, assume $\alpha$ and $\beta$ are the two sorted arrays to be merged. Adopt an adversary that select item from the longer array on each comparison for worst case analysis. Then we can infer the following:
+\begin{itemize}
+\item{} $\alpha$ and $\beta$ have respective length $\mathcal{b} \frac{n}{2} \mathcal{c}$ and $\mathcal{d} \frac{n}{2} \mathcal{e}$ without loss of generality
+\item{} every comparison reduce the length of either $\alpha$ or $\beta$ by 1
+\item{} before either array is empty, both $\alpha$ and $\beta$ will have a length of 1
+\item{} when both $\alpha$ and $\beta$ have a length of 1, the next comparison is the last one needed
+\end{itemize}
+
+Thus, when both $\alpha$ and $\beta$ have a length of 1, the number of comparisons already taking place is $n - 1 - 1 = n - 2$. And, the next comparison finishes the merge which leave the total number of comparison at $n - 1$. Therefore, $n - 1$ comparisons are necessary in the worst case.
 
 \item{(c)} [4 marks]
 Prove that Mergesort, as described above, takes $n * \mathcal{d} \lg{n} \mathcal{e} - 2^{\mathcal{d} \lg{n} \mathcal{e}} + 1$ comparisons in the worst case.
 
+First consider n that is a power of 2.
+\begin{itemize}
+\item{} The expression converts to $n * \lg{n} - n + 1$.
+\item{base case} $n * \lg{n} - n + 1$ holds for $n = 2^{1}$ by definition of $C$.
+\item{induction} Given $n * \lg{n} - n + 1$ holds for $n = 2^{i}$, by definition of $C$, $C(2^{i+1}) = C(2^{i}) + C(2^{i}) + 2^{i+1} - 1 = 2 * 2^{i} * i - 2 * 2^{i} + 2 + 2^{i+1} - 1 = 2^{i+1} * (i+1) - 2^{i+1} + 1$. Thus, $n * \lg{n} - n + 1$ holds for $n = 2^{i+1}$.
+\item{conclusion} Therefore, $n * \lg{n} - n + 1$ holds for all power of 2. Equivalently, $n * \mathcal{d} \lg{n} \mathcal{e} - 2^{\mathcal{d} \lg{n} \mathcal{e}} + 1$ holds for all power of 2.
+\end{itemize}
+
+Then, for number k that is not a power of 2, consider the smallest power of 2 that's greater than k. Assume $k = 2^{i} - j > 2^{i-1}$:
+\begin{itemize}
+\item{} $C(2^{i}) = 2^{i} * i - 2^{i} + 1$.
+\item{} consider each item taken from the array, i comparisons are saved as the recursion depth is i(until the total number of item fall to $2^{i-1}$).
+\item{} given $k = 2^{i} - j > 2^{i-1}$, $C(k) = C(2^{i}) - j * i = (2^{i} - j) * i - 2^{i} + 1$
+\end{itemize}
+
+Since $\mathcal{d} \lg{k} \mathcal{e} = i$, we have $C(k) = k * \mathcal{d} \lg{k} \mathcal{e} - 2^{\mathcal{d} \lg{k} \mathcal{e}} + 1$. \textbf{Therefore, we have $n * \mathcal{d} \lg{n} \mathcal{e} - 2^{\mathcal{d} \lg{n} \mathcal{e}} + 1$ for all $n \geq 2$}.
 \item{(d)} [4 marks]
 The \textit{expected} number of comparisons for this method (over all possible permutations of the input) is a little $\theta(n)$ better. Prove it. (You do not have to deal with the exact constant in this $\theta(n)$ term.)
+
+Consider that the number of comparisons at each merge is determined by the size of maximum suffix of either arrays where the items in the suffix is greater than any item not in the suffix. Therefore, we can use combinatorics to analysis the probability of number of comparisons on each merge.
+
+Assume $\alpha$ and $\beta$ are the two sorted arrays to be merged with respective length $m$ and $n$, and each relative ordering is equally likely. Also note that the relative orderings are all independent on each merge steps.
+
+\begin{itemize}
+\item{} The total number of unique relative ordering between all items are ${m + n \choose n} = {m + n \choose m}$.
+\item{} The total number of unique relative ordering where the maximum suffix size is \textbf{k or more} amounts to ${m + n - k \choose n} + {m + n - k \choose m}$ where the k greatest items are group togather and the rest $m + n - k$ are split into $(m, n - k)$ or $(n, m - k)$.
+\item{} Each relative ordering where the maximum suffix size is \textbf{k or more}, saves $k - 1$ comparisons from the worst case.
+\item{} The total number of comparisons saved from the worst case is bounded by the summation $S = \sum^{m}_{k > 1}{(k - 1)*{m + n - k \choose n}} + \sum^{n}_{k > 1}{(k - 1)*{m + n - k \choose m}}$.
+\end{itemize}
+
+We conclude the average number of comparisons saved on each merge step is upper bounded by:
+\begin{equation}
+\sum^{m}_{k > 1}{\frac{(k - 1)*{m + n - k \choose n}}{{m + n \choose n}}} + \sum^{n}_{k > 1}{\frac{(k - 1)*{m + n - k \choose m}}{{m + n \choose m}}}
+\end{equation}
+\textbf{Knowing that this expression is bounded by a constant, c, and there are at most n merges in total,  the total numbers of comparions saved is upper bounded by $c * n$}.
+
+Let's look at the lower bound now:
+\begin{itemize}
+\item{} Consider the special case 1 where $\alpha$ and $\beta$ are the two sorted arrays to be merged with respective length 2 and 1. The total number of unique relative ordering where the maximum suffix size is \textbf{2 or more} amounts to ${1 \choose 1} + {1 \choose 2} = 1$. Thus average number of comparisons saved from worst case is lower bounded by $\frac{1}{{1 + 2 \choose 1}} = \frac{1}{3}$.
+\item{} Consider the special case 2 where $\alpha$ and $\beta$ are the two sorted arrays to be merged with respective length 2 and 2. The total number of unique relative ordering where the maximum suffix size is \textbf{2 or more} amounts to ${2 \choose 2} + {2 \choose 2} = 2$. Thus average number of comparisons saved from worst case is lower bounded by $\frac{2}{{2 + 2 \choose 2}} = \frac{1}{3}$.
+\end{itemize}
+
+We know that each of the n items have either gone through a merge of $(2,1)$ or $(2,2)$. Therefore, assuming there are i merges of $(2,1)$ and j merges of $(2,2)$, we have the following:
+\begin{equation}
+i * 3 + j * 4 \geq n
+\end{equation}
+which gives us $i + j \geq \frac{n}{4}$. \textbf{Since either of the merges saves $\frac{1}{3}$ comparisons, the total numbers of comparions saved is lower bounded by $\frac{n}{4} * \frac{1}{3} = \frac{n}{12}$}.
+
+Therefore,  \textbf{the comparions saved from the worst case is bound by $\theta{n}$}.
 
 \end{itemize}
 
