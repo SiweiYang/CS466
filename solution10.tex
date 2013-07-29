@@ -17,7 +17,7 @@ Siwei Yang - 20258568\\
 
 \begin{enumerate}
 
-\item{} [14 marks: Find second largest value]
+\item{} [16 marks: Find second largest value]
 
 Take a random sample, R, of r of the values; $r = \frac{n}{\lg n}$ (Assume r is a power of 2). By repeatedly pairing the elements that have “won” every comparison, find the maximum of the sample (in r-1 comparisons). Initialize $m_{1}$ as the sample maximum and $m_{2}$ as the element that was the maximum of half the sample but “lost” to the maximum in the last comparison.
 
@@ -51,7 +51,7 @@ If the condition is not satisfied, then we need to find the maximum between all 
 
 \item{}[4 marks]What is the expected number of times $m_{2}$ is replaced (i.e. the number of times a second comparison is done) in scanning the $n-\frac{n}{\lg n}$ non-sample elements?
 
-Given that no element in the remaining part is the global maximum, the expected number of times $m_{2}$ is replaced becomes the expected number of times an element is larger than all preceeding it with a twist on the start. Since $m_{2}$ is the maximum of $\frac{r}{2}$ elements, and there are $n - r$ remaining elements, we need to consider a list of number with size $n - \frac{r}{2}$ where the first $\frac{r}{2}$ elements has a maximum of $m_{2}$.
+If no element in the remaining part is the global maximum, \textbf{the expected number of times $m_{2}$ is replaced becomes the expected number of times an element is larger than the series preceeding it, with a twist on the start}. Since $m_{2}$ is the maximum of $\frac{r}{2}$ elements, and there are $n - r$ remaining elements, we need to consider a list of number with size $n - \frac{r}{2}$ where the first $\frac{r}{2}$ elements has a maximum of $m_{2}$.
 
 Then we know the expected number of times an element is larger than all preceeding it is:
 \begin{equation}
@@ -59,13 +59,35 @@ Then we know the expected number of times an element is larger than all preceedi
 \end{equation}
 
 But the first $\frac{r}{2}$ elements does not contribute to the replacement numbers, thus the accounted number is:
+\begin{equation} \label{eq:extra-comparison}
+\sum_{i = \frac{r}{2} + 1}^{n - \frac{r}{2}}\frac{1}{i} = H(n - \frac{r}{2}) - H(\frac{r}{2}) \asymp \ln n
+\end{equation}
+
+We know that the Harmonic series converges to $H(x) = \ln x$, thus equation~\ref{eq:extra-comparison} converges to $\ln n$.
+
+If the global maximum exists in the remaining part, then we need to take approximation since the accurate number is too complex. Assuming $m_{1}$ and $m_{2}$ are approximately the first and second greatest item in the sample, consider the expected number of times an element is the first and second greatest item in the series preceeding it.
+
+The expected number for both case is:
 \begin{equation}
-\sum_{i = \frac{r}{2} + 1}^{n - \frac{r}{2}}\frac{1}{i} = H(n - \frac{r}{2}) - H(\frac{r}{2})
+\sum_{i = r + 1}^{n}\frac{1}{i} = H(n) - H(r)
+\end{equation}
+
+*We took another approximation here because to get exact result, we also need to account for the condition that the global maximum is in the remaining part.
+
+Each case happens independently, and cause one extra comparison. Thus, the expected number of second comparion is:
+\begin{equation}
+2 * (H(n) - H(r)) \asymp 2 * \ln n
 \end{equation}
 
 \item{}[4 marks]Given the probability of the condition being satisfied and the expected number of comparisons used in that case, and the probability of it not being satisfied and the number of comparisons used in the latter case, what is the expected number of comparisons used by the method.
 
-In case the global maximum exists in the remaining part, 
+\begin{itemize}
+\item{} In case the global maximum exists in the sample, the probability is $1 - \frac{1}{\lg n}$, and the number of expect comparison is $(r - 1) + (n - r) + H(n - \frac{r}{2}) - H(\frac{r}{2}) + \lg n - \lg \lg n \asymp n - 1 + 2 * \ln n$
+\item{} In case the global maximum exists in the remaining part, the probability is $\frac{1}{\lg n}$, and the number of expect comparison is $(r - 1) + (n - r) + 2 * (H(n) - H(r)) \asymp n - 1 + 2 * \ln n$
+\end{itemize}
+
+Therefore, the expected comparison is approximately $n + 2 * \ln n$.
+
 
 \end{itemize}
 
